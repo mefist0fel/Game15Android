@@ -78,7 +78,7 @@ public class GameActivity extends AppCompatActivity
         FieldData.getInstance().shuffleFields();
         showFragment(new GameFragment());
     }
-    
+
     void showFragment(Fragment fragment) {
         showFragment(fragment, false);
     }
@@ -87,6 +87,7 @@ public class GameActivity extends AppCompatActivity
         FragmentManager myFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = myFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         if (addToBackStack) {
             fragmentTransaction.addToBackStack(null);
         }
