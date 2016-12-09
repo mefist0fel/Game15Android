@@ -6,4 +6,6 @@
     <string name="you_win">Ты победил!</string>
     <string name="shuffle">Перемешать</string>
     <string name="about">О приложении</string>
+    <string name="author">Автор Костромин Кирилл (aka Mefistofel)</string>
+    <string name="mail">mfstfl@gmail.com</string>
 </resources>

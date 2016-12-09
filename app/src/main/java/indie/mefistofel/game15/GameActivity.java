@@ -69,6 +69,7 @@ public class GameActivity extends AppCompatActivity
                 shuffleNewGame();
                 break;
             case info:
+                showFragment(new InfoFragment(), true);
                 break;
         }
     }
@@ -77,11 +78,18 @@ public class GameActivity extends AppCompatActivity
         FieldData.getInstance().shuffleFields();
         showFragment(new GameFragment());
     }
-
+    
     void showFragment(Fragment fragment) {
+        showFragment(fragment, false);
+    }
+
+    void showFragment(Fragment fragment, boolean addToBackStack) {
         FragmentManager myFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = myFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
+        if (addToBackStack) {
+            fragmentTransaction.addToBackStack(null);
+        }
         fragmentTransaction.commit();
     }
 }

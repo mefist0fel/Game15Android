@@ -23,8 +23,6 @@
     <string name="about">Info</string>
 
     <string name="you_win">You win!</string>
-
-    <string name="title_activity_fullscreenf">FullscreenfActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="author">A game by Kostromin Kirill (aka Mefistofel)</string>
+    <string name="mail">mfstfl@gmail.com</string>
 </resources>
