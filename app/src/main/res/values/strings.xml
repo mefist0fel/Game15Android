@@ -16,4 +16,15 @@
     <string name="n13" translatable="false">13</string>
     <string name="n14" translatable="false">14</string>
     <string name="n15" translatable="false">15</string>
+
+    <string name="navigation_drawer_open">Open navigation</string>
+    <string name="navigation_drawer_close">Close navigation</string>
+    <string name="shuffle">Shuffle</string>
+    <string name="about">Info</string>
+
+    <string name="you_win">You win!</string>
+
+    <string name="title_activity_fullscreenf">FullscreenfActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

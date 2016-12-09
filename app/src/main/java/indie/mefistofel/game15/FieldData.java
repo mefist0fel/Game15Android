@@ -1,27 +1,27 @@
 package indie.mefistofel.game15;
 
-import android.util.Log;
-
 import java.util.Random;
 
 /**
  * Created by Mefistofel on 06.12.16.
+ * base game field class
  */
 
 class FieldData {
     final int fieldSize = 4;
-    final int EMPTY_FIELD = 0;
-    final int NON_USABLE_FIELD = -1;
+    private final int EMPTY_FIELD = 0;
+    private final int NON_USABLE_FIELD = -1;
 
     private static FieldData instance = null;
 
     private int[][] field = null;
     private int[][] reference = null;
 
+    private boolean equalWinReference = false;
+
     static FieldData getInstance () {
         if (instance == null) {
             instance = new FieldData();
-            instance.shuffleFields();
         }
         return instance;
     }
@@ -33,14 +33,14 @@ class FieldData {
         return NON_USABLE_FIELD;
     }
 
-    void shuffleFields()
-    {
+    void shuffleFields() {
         field = setDefaultFieldValues();
         Random random = new Random();
         for(int i = 0; i < 10000; i++)
         {
             findSwitchNeighbor(random.nextInt(4), random.nextInt(4));
         }
+        equalWinReference = false;
     }
 
     void findSwitchNeighbor(int x, int y) {
@@ -52,10 +52,13 @@ class FieldData {
         trySwitchButton(x, y, x, y - 1);
     }
 
-    void checkWinConditions() {
-        if (isFieldEqualToReference()) {
-            Log.i("aa", "WIN");
-        }
+    boolean checkWinConditions() {
+        equalWinReference = isFieldEqualToReference();
+        return equalWinReference;
+    }
+
+    boolean isFieldWin() {
+        return equalWinReference;
     }
 
     private FieldData () {
@@ -85,9 +88,9 @@ class FieldData {
     }
 
     private void trySwitchButton(int xFrom, int yFrom, int xTo, int yTo) {
-        if (field[xTo][yTo] == 0) {
+        if (field[xTo][yTo] == EMPTY_FIELD) {
             field[xTo][yTo] = field[xFrom][yFrom];
-            field[xFrom][yFrom] = 0;
+            field[xFrom][yFrom] = EMPTY_FIELD;
         }
     }
 
