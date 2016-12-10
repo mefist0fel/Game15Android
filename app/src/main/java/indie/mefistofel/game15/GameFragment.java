@@ -98,6 +98,9 @@ public class GameFragment extends Fragment {
             buttons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (field.isFieldWin()) {
+                        return;
+                    }
                     onButtonClick(buttonId);
                     setButtonsPositions(true);
                     if (FieldData.getInstance().checkWinConditions()) {
@@ -124,7 +127,9 @@ public class GameFragment extends Fragment {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                mListener.onFragmentInteraction(IFragmentInteractionListener.Action.win);
+                if (mListener != null) {
+                    mListener.onFragmentInteraction(IFragmentInteractionListener.Action.win);
+                }
             }
         }, 1600);
     }
@@ -205,9 +210,6 @@ public class GameFragment extends Fragment {
     }
 
     void onButtonClick(int fieldValue) {
-        if (field.isFieldWin()) {
-            return;
-        }
         for (int i = 0; i < field.fieldSize; i++) {
             for (int j = 0; j < field.fieldSize; j++) {
                 if (field.getField(i, j) == fieldValue) {

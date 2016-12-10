@@ -15,7 +15,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 public class GameActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, IFragmentInteractionListener{
+        implements NavigationView.OnNavigationItemSelectedListener, IFragmentInteractionListener {
+
+    private Fragment mCurrentFragment;
+    private static final String TAG_CURRENT_FRAGMENT = "current_fragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,11 @@ public class GameActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        shuffleNewGame();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        mCurrentFragment = fragmentManager.findFragmentByTag(TAG_CURRENT_FRAGMENT);
+        if (mCurrentFragment == null) {
+            shuffleNewGame();
+        }
     }
 
     @Override
@@ -84,9 +91,10 @@ public class GameActivity extends AppCompatActivity
     }
 
     void showFragment(Fragment fragment, boolean addToBackStack) {
+        mCurrentFragment = fragment;
         FragmentManager myFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = myFragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.replace(R.id.container, fragment, TAG_CURRENT_FRAGMENT);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         if (addToBackStack) {
             fragmentTransaction.addToBackStack(null);
