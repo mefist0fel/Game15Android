@@ -1,33 +1,25 @@
 package indie.mefistofel.game15;
 
-import android.animation.TimeInterpolator;
 import android.content.Context;
-import android.graphics.Path;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.Interpolator;
-import android.view.animation.PathInterpolator;
-import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import java.lang.reflect.Field;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.RunnableFuture;
-import java.util.regex.Matcher;
 
 /**
  * Game implementation fragment
  */
-public class GameFragment extends Fragment {
+public class GameFragment extends Fragment implements IFragmentKey {
     private IFragmentInteractionListener mListener;
 
     private FrameLayout gameLayout = null;
@@ -73,6 +65,12 @@ public class GameFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+
+        }
     }
 
     void attachButtonViews(View view) {
@@ -213,6 +211,43 @@ public class GameFragment extends Fragment {
         for (int i = 0; i < field.fieldSize; i++) {
             for (int j = 0; j < field.fieldSize; j++) {
                 if (field.getField(i, j) == fieldValue) {
+                    field.findSwitchNeighbor(i, j);
+                    return;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void OnKeyDown(int keyCode) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                Move(1, 0);
+                break;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                Move(-1, 0);
+                break;
+            case KeyEvent.KEYCODE_DPAD_UP:
+                Move(0, -1);
+                break;
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                Move(0, 1);
+                break;
+        }
+    }
+
+    private void Move(int x, int y) {
+        TryMove(x, y);
+        setButtonsPositions(true);
+        if (FieldData.getInstance().checkWinConditions()) {
+            showWinEffect();
+        }
+    }
+
+    private void TryMove(int x, int y) {
+        for (int i = 0; i < field.fieldSize; i++) {
+            for (int j = 0; j < field.fieldSize; j++) {
+                if (field.getField(i + x, j + y) == field.EMPTY_FIELD) {
                     field.findSwitchNeighbor(i, j);
                     return;
                 }

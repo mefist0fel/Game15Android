@@ -9,7 +9,7 @@ import java.util.Random;
 
 class FieldData {
     final int fieldSize = 4;
-    private final int EMPTY_FIELD = 0;
+    final int EMPTY_FIELD = 0;
     private final int NON_USABLE_FIELD = -1;
 
     private static FieldData instance = null;
